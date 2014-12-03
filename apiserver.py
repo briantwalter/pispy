@@ -14,7 +14,7 @@ import json
 from flask import Flask, jsonify, request
 
 # static configs
-path = "/home/pi/src/pispy/www/archive"
+path = "/home/pi/src/pispy/www/archive/jpg"
 
 # create flask application object
 app = Flask(__name__)
