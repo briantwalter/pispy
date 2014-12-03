@@ -15,7 +15,7 @@
         </thead>
         <tbody ng-controller="ArchiveControllerLS">
           <tr ng-repeat="file in archive.contents">
-            <td><a href="/archive/{{ file.filename }}">{{ file.filename }}</a></td>
+            <td><a href="/archive/jpg/{{ file.filename }}">{{ file.filename }}</a></td>
             <td>{{ file.bytes / 1024 | number:1 }}</td>
             <td>{{ file.md5sum }}</td>
             <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
