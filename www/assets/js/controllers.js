@@ -43,7 +43,7 @@ app.controller('SeattleTempController', function SeattleTempController($scope, $
 /*					*/
 /* Code for Archive functions		*/
 /*					*/
-app.controller('ArchiveControllerLS', function ArchiveControllerLS($scope, $http) {
+app.controller('ArchiveController', function ArchiveController($scope, $http) {
   $http.get('/api/archive/ls').
     success(function(data, status, headers, config) {
       $scope.archive = data;
@@ -51,4 +51,13 @@ app.controller('ArchiveControllerLS', function ArchiveControllerLS($scope, $http
     error(function(data, status, headers, config) {
       alert("FATAL: could not get contact API " + status);
     });
+  $scope.delete = function(filename) {
+    $http.delete('/api/archive/rm/' + filename).
+      success(function(data, status, headers, config) {
+        /*alert("INFO: API responded " + status);*/
+      }).
+      error(function(data, status, headers, config) {
+        alert("FATAL: could not get contact API " + status);
+      });
+  };
 });

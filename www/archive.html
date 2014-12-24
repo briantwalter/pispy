@@ -13,14 +13,14 @@
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody ng-controller="ArchiveControllerLS">
+        <tbody ng-controller="ArchiveController">
           <tr ng-repeat="file in archive.contents">
             <td><a href="/archive/jpg/{{ file.filename }}">{{ file.filename }}</a></td>
             <td>{{ file.bytes / 1024 | number:1 }}</td>
             <td>{{ file.md5sum }}</td>
             <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
             <td>
-              <a href ng-click="archive.contents.splice($index,1)">
+              <a href ng-click="archive.contents.splice($index,1); delete(file.filename)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true">
                 </span>
               </a>
