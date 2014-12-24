@@ -10,7 +10,7 @@
             <th>KBytes</th>
             <th>MD5</th>
             <th>Modified</th>
-            <th>Delete</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody ng-controller="ArchiveController">
@@ -20,9 +20,14 @@
             <td>{{ file.md5sum }}</td>
             <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
             <td>
+              <a href >
+                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" title="View {{ file.filename }}"></span>
+              </a>
+              <a href >
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Save {{ file.filename }}"></span>
+              </a>
               <a href ng-click="archive.contents.splice($index,1); delete(file.filename)">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true">
-                </span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" title="Delete {{ file.filename }}"></span>
               </a>
             </td>
           </tr>
