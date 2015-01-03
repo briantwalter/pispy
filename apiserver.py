@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # apiserver.py		API server for the PiSpy camera
-# version		0.0.5
+# version		0.0.6
 # author		Brian Walter @briantwalter
 # description		RESTful API for controlling and 
 #			reading data for the PiSpy Camera
@@ -11,10 +11,13 @@ import os
 import hashlib
 import re
 import json
+import subprocess
 from flask import Flask, jsonify, request
 
 # static configs
 path = "/home/pi/src/pispy/www/archive/jpg"
+cputempfile = "/sys/class/thermal/thermal_zone0/temp"
+gputempcmd = "/opt/vc/bin/vcgencmd measure_temp | sed -e 's/^temp\=//' | rev | cut -c 3- | rev"
 
 # create flask application object
 app = Flask(__name__)
@@ -33,24 +36,38 @@ def json_temp():
   location = open('/etc/location', "r")
   city = location.readline()
   location.close()
-  print "DEBUG: city is", city.rstrip("\n")
+  #print "DEBUG: city is", city.rstrip("\n")
   if city.rstrip("\n") == 'boise':
     thermfile = "/sys/bus/w1/devices/28-000005ff95db/w1_slave" # Boise thermometer
   if city.rstrip("\n") == 'seattle':
     thermfile = "/sys/bus/w1/devices/28-000005fd70d4/w1_slave" # Seattle thermometer
-  print "DEBUG: thermfile is: ", thermfile
+  #print "DEBUG: thermfile is: ", thermfile
   if request.method == 'GET':
     infile = open(thermfile, "r")
     templine = infile.readlines()[1:]
     infile.close()
-    print "DEBUG: raw file line: ", templine
+    #print "DEBUG: raw file line: ", templine
     match = re.search('t=...', str(templine))
     if match:
+      # start external DS18B20 read
       longc = re.sub(r't=', '', match.group())
       decc = float(longc) / 10;
       decf = float(((decc * 9) / 5) + 32)
-      currenttemp = { 'celsius': round(decc, 1), 'fahrenheit': round(decf, 1) }
-      return jsonify({'currenttemp': currenttemp})
+      externaltemp = { 'celsius': round(decc, 1), 'fahrenheit': round(decf, 1) }
+      # start internal CPU read
+      fh_cputemp = open(cputempfile, "r")
+      cputemp_longc = fh_cputemp.readline()
+      fh_cputemp.close() 
+      cputemp_c = float(cputemp_longc) / 1000;
+      cputemp_f = float(((cputemp_c * 9) / 5) + 32) 
+      cputemp = { 'celsius': round(cputemp_c, 1), 'fahrenheit': round(cputemp_f, 1) }
+      # start internal GPU read
+      gputemp_c = subprocess.check_output(gputempcmd, shell=True)
+      gputemp_f = float(((float(gputemp_c) * 9) / 5) + 32) 
+      gputemp = { 'celsius': round(float(gputemp_c), 1), 'fahrenheit': round(gputemp_f, 1) }
+      # build payload to return
+      payload = ([{'external': externaltemp}, {'cpu': cputemp}, {'gpu': gputemp}])
+      return jsonify(temperatures = payload )
     else:
       return json_error()
 
