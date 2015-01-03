@@ -7,7 +7,7 @@ var app = angular.module('PiSpyApp', []);
 app.controller('InternalTempController', function InternalTempController($scope, $http) {
   $http.get('/api/temp').
     success(function(data, status, headers, config) {
-      $scope.internaltemp = data.currenttemp;
+      $scope.externaltemp = data.external;
     }).
     error(function(data, status, headers, config) {
       alert("FATAL: could not get contact API " + status);

@@ -12,7 +12,7 @@ import hashlib
 import re
 import json
 import subprocess
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
 # static configs
 path = "/home/pi/src/pispy/www/archive/jpg"
@@ -66,8 +66,8 @@ def json_temp():
       gputemp_f = float(((float(gputemp_c) * 9) / 5) + 32) 
       gputemp = { 'celsius': round(float(gputemp_c), 1), 'fahrenheit': round(gputemp_f, 1) }
       # build payload to return
-      payload = ([{'external': externaltemp}, {'cpu': cputemp}, {'gpu': gputemp}])
-      return jsonify(temperatures = payload )
+      payload = ({'external': externaltemp, 'cpu': cputemp, 'gpu': gputemp})
+      return Response(json.dumps(payload, indent=4, sort_keys=True), mimetype='application/json')
     else:
       return json_error()
 
