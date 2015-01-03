@@ -4,11 +4,10 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <!-- <li class="active"><a href="">Temperatures</a></li> -->
           <li><a ng-controller="EagleTempController" ng-mouseover="hover = eagletemp.temp" ng-mouseleave="hover = null" href="">Eagle {{ hover | number:1 }}</a></li>
           <li><a ng-controller="MilwaukeeTempController" ng-mouseover="hover = milwaukeetemp.temp" ng-mouseleave="hover = null" href="">Milwaukee {{ hover | number:1 }}</a></li>
           <li><a ng-controller="SeattleTempController" ng-mouseover="hover = seattletemp.temp" ng-mouseleave="hover = null" href="">Seattle {{ hover | number:1 }}</a></li>
-          <li><a ng-controller="InternalTempController" ng-mouseover="hover = externaltemp.fahrenheit" ng-mouseleave="hover = null" href="">Internal {{ hover | number:1 }}</a></li>
+          <!--<li><a ng-controller="InternalTempController" ng-mouseover="hover = externaltemp.fahrenheit" ng-mouseleave="hover = null" href="">Internal {{ hover | number:1 }}</a></li>-->
         </ul>
         <h3><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> <a href="/">PiSpy</a> Webcam</h3>
       </div>
