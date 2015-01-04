@@ -37,10 +37,11 @@ def json_temp():
   city = location.readline()
   location.close()
   if city.rstrip("\n") == 'boise':
-    #thermfile = "/sys/bus/w1/devices/28-000005ff95db/w1_slave" # Boise thermometer
-    thermfile = "/home/pi/src/pispy/w1_slave.dummy" # Dummy thermometer
+    thermfile = "/sys/bus/w1/devices/28-000005ff95db/w1_slave" # Boise thermometer
   if city.rstrip("\n") == 'seattle':
     thermfile = "/sys/bus/w1/devices/28-000005fd70d4/w1_slave" # Seattle thermometer
+  if city.rstrip("\n") == 'dummy':
+    thermfile = "/home/pi/src/pispy/w1_slave.dummy" # Dummy thermometer
   if request.method == 'GET':
     infile = open(thermfile, "r")
     templine = infile.readlines()[1:]
