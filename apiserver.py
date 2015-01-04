@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # apiserver.py		API server for the PiSpy camera
-# version		0.0.6
+# version		0.0.7
 # author		Brian Walter @briantwalter
 # description		RESTful API for controlling and 
 #			reading data for the PiSpy Camera
@@ -36,17 +36,15 @@ def json_temp():
   location = open('/etc/location', "r")
   city = location.readline()
   location.close()
-  #print "DEBUG: city is", city.rstrip("\n")
   if city.rstrip("\n") == 'boise':
-    thermfile = "/sys/bus/w1/devices/28-000005ff95db/w1_slave" # Boise thermometer
+    #thermfile = "/sys/bus/w1/devices/28-000005ff95db/w1_slave" # Boise thermometer
+    thermfile = "/home/pi/src/pispy/w1_slave.dummy" # Dummy thermometer
   if city.rstrip("\n") == 'seattle':
     thermfile = "/sys/bus/w1/devices/28-000005fd70d4/w1_slave" # Seattle thermometer
-  #print "DEBUG: thermfile is: ", thermfile
   if request.method == 'GET':
     infile = open(thermfile, "r")
     templine = infile.readlines()[1:]
     infile.close()
-    #print "DEBUG: raw file line: ", templine
     match = re.search('t=...', str(templine))
     if match:
       # start external DS18B20 read
