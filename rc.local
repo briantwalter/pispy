@@ -24,7 +24,7 @@ fi
 
 # startup apiserver
 if [ -x /home/pi/src/pispy/apiserver.py ]; then
-  screen -S apiserver -d -m su - pi -c "/home/pi/src/pispy/apiserver.py"
+  screen -S apiserver -d -m /home/pi/src/pispy/apiserver.py
 fi
 
 exit 0
