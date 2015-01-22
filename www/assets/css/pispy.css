@@ -2,6 +2,6 @@
 /* PiSpy Webcam Local CSS styles 	*/
 /*					*/
 
-a:visited {
+a.piclink:visited {
   color:#5cb85c;
 }

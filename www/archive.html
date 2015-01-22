@@ -3,28 +3,27 @@
   <!--# include file="head.html" -->
   <body>
   <!--# include file="top.html" -->
+
       <table class="table table-striped">
         <thead>
           <tr>
             <th>Filename</th>
             <th>KBytes</th>
-            <th>MD5</th>
             <th>Modified</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody ng-controller="ArchiveController">
           <tr ng-repeat="file in archive.contents">
-            <td><a href="/archive/jpg/{{ file.filename }}">{{ file.filename }}</a></td>
+            <td><a href="/archive/jpg/{{ file.filename }}" class="piclink">{{ file.filename }}</a></td>
             <td>{{ file.bytes / 1024 | number:1 }}</td>
-            <td>{{ file.md5sum }}</td>
             <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
             <td>
-              <a href >
-                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" title="View {{ file.filename }}"></span>
+              <a href="/archive/jpg/{{ file.filename }}" download="{{ file.filename }}">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Download {{ file.filename }}"></span>
               </a>
               <a href >
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Save {{ file.filename }}"></span>
+                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" title="View {{ file.filename }}"></span>
               </a>
               <a href ng-click="archive.contents.splice($index,1); delete(file.filename)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" title="Delete {{ file.filename }}"></span>
