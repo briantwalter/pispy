@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # apiserver.py		API server for the PiSpy camera
-# version		0.0.7
+# version		0.0.8
 # author		Brian Walter @briantwalter
 # description		RESTful API for controlling and 
 #			reading data for the PiSpy Camera
@@ -15,7 +15,7 @@ import subprocess
 from flask import Flask, Response, jsonify, request
 
 # static configs
-path = "/home/pi/src/pispy/www/archive/jpg"
+path = "/home/pi/src/pispy/www/archive"
 cputempfile = "/sys/class/thermal/thermal_zone0/temp"
 gputempcmd = "/opt/vc/bin/vcgencmd measure_temp | sed -e 's/^temp\=//' | rev | cut -c 3- | rev"
 
@@ -74,16 +74,24 @@ def json_temp():
 @app.route('/api/archive/ls', methods=['GET'])
 def json_archive_ls():
   if request.method == 'GET':
-    files = []
-    contents = sorted(os.listdir(path))
-    for file in contents:
-      filename = file
-      mtime = os.stat(path + "/" + file).st_mtime
-      bytes = os.stat(path + "/" + file).st_size
-      md5sum = hashlib.md5(path + "/" + file).hexdigest()
-      files.append({'filename': filename, 'mtime': mtime, 'bytes': bytes, 'md5sum': md5sum})
-  if files:
-    return jsonify({'contents': files})
+    images = []
+    movies = []
+    contents_jpg = sorted(os.listdir(path + "/jpg"))
+    for image in contents_jpg:
+      filename = image
+      mtime = os.stat(path + "/jpg/" + image).st_mtime
+      bytes = os.stat(path + "/jpg/" + image).st_size
+      md5sum = hashlib.md5(path + "/jpg/" + image).hexdigest()
+      images.append({'filename': filename, 'mtime': mtime, 'bytes': bytes, 'md5sum': md5sum})
+    contents_mpg = sorted(os.listdir(path + "/mpg"))
+    for movie in contents_mpg:
+      filename = movie
+      mtime = os.stat(path + "/mpg/" + movie).st_mtime
+      bytes = os.stat(path + "/mpg/" + movie).st_size
+      md5sum = hashlib.md5(path + "/mpg/" + movie).hexdigest()
+      movies.append({'filename': filename, 'mtime': mtime, 'bytes': bytes, 'md5sum': md5sum})
+  if images and movies:
+    return Response(json.dumps({'images': images,'movies': movies},indent=4, sort_keys=True), mimetype='application/json')
   else:
     return json_error()
 
@@ -93,8 +101,8 @@ def json_archive_rm(filename):
   if request.method == 'GET':
     return json_error_not_implemented()
   if request.method == 'POST' or request.method == 'DELETE':
-    if os.path.isfile(path + "/" + filename):
-      os.remove(path + "/" + filename)
+    if os.path.isfile(path + "/jpg/" + filename):
+      os.remove(path + "/jpg/" + filename)
       return jsonify({'status': 'removed file', 'filename': filename})
     else:
       return jsonify({'status': 'not a file', 'filename': filename})
@@ -104,6 +112,7 @@ def json_archive_rm(filename):
 
 # main
 if __name__ == '__main__':
-  #app.debug = True
-  app.port = 5000
-  app.run()
+  host = '0.0.0.0'
+  port = 5000
+  app.debug = False
+  app.run(host, port)
