@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # prune			Prune the image archive
-# version		0.0.2
+# version		0.0.3
 # author		Brian Walter @briantwalter
 # description		Simple script to limit the 
 #			number of save archive images
 
 # configuration
 ARCHDIR=/home/pi/src/pispy/www/archive
+TODAY=`date +"%Y-%m-%d"`
 DAYSOLD=8
 
 # main
@@ -15,3 +16,5 @@ if [ -d ${ARCHDIR} ]; then
   find ${ARCHDIR} -mtime +${DAYSOLD} | xargs rm -rf > /dev/null 2>&1
 fi
 
+# make daily timelapse
+cat ${ARCHDIR}/mpg/timelapse_${TODAY}-{07..20}.mpg > ${ARCHDIR}/mpg/daily_${TODAY}.mpg 2> /dev/null

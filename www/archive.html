@@ -22,9 +22,6 @@
               <a href="/archive/jpg/{{ file.filename }}" download="{{ file.filename }}">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Download {{ file.filename }}"></span>
               </a>
-              <a href >
-                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" title="View {{ file.filename }}"></span>
-              </a>
               <a href ng-click="archive.contents.splice($index,1); delete(file.filename)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" title="Delete {{ file.filename }}"></span>
               </a>
