@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody ng-controller="ArchiveController">
-          <tr ng-repeat="file in archive.contents">
+          <tr ng-repeat="file in archive.images">
             <td><a href="/archive/jpg/{{ file.filename }}" class="piclink">{{ file.filename }}</a></td>
             <td>{{ file.bytes / 1024 | number:1 }}</td>
             <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
@@ -22,7 +22,32 @@
               <a href="/archive/jpg/{{ file.filename }}" download="{{ file.filename }}">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Download {{ file.filename }}"></span>
               </a>
-              <a href ng-click="archive.contents.splice($index,1); delete(file.filename)">
+              <a href ng-click="archive.images.splice($index,1); delete(file.filename)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" title="Delete {{ file.filename }}"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Movie</th>
+            <th>KBytes</th>
+            <th>Modified</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody ng-controller="ArchiveController">
+          <tr ng-repeat="file in archive.movies">
+            <td><a href="/archive/mpg/{{ file.filename }}" class="piclink">{{ file.filename }}</a></td>
+            <td>{{ file.bytes / 1024 | number:1 }}</td>
+            <td>{{ file.mtime * 1000 | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>
+              <a href="/archive/mpg/{{ file.filename }}" download="{{ file.filename }}">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" title="Download {{ file.filename }}"></span>
+              </a>
+              <a href ng-click="archive.movies.splice($index,1); delete(file.filename)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" title="Delete {{ file.filename }}"></span>
               </a>
             </td>
