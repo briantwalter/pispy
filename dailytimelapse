@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# dailytimelapse	Make daily timelapse movies
+# version		0.0.1
+# author		Brian Walter @briantwalter
+# description		Simple script to combine day time
+#			hourly mpg to a single file
+
+# configuration
+ARCHDIR=/home/pi/src/pispy/www/archive
+TODAY=`date +"%Y-%m-%d"`
+
+# main
+cat ${ARCHDIR}/mpg/timelapse_${TODAY}-{07..20}.mpg > ${ARCHDIR}/mpg/daily_${TODAY}.mpg 2> /dev/null
