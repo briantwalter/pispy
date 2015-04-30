@@ -40,6 +40,15 @@ app.controller('SeattleTempController', function SeattleTempController($scope, $
       alert("FATAL: could not get contact API " + status);
     });
 });
+app.controller('NorthBendTempController', function NorthBendTempController($scope, $http) {
+  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5804915&units=imperial').
+    success(function(data, status, headers, config) {
+      $scope.northbendtemp = data.main;
+    }).
+    error(function(data, status, headers, config) {
+      alert("FATAL: could not get contact API " + status);
+    });
+});
 /*					*/
 /* Code for Archive functions		*/
 /*					*/
