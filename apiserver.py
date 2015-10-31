@@ -104,6 +104,9 @@ def json_archive_rm(filename):
     if os.path.isfile(path + "/jpg/" + filename):
       os.remove(path + "/jpg/" + filename)
       return jsonify({'status': 'removed file', 'filename': filename})
+    if os.path.isfile(path + "/mpg/" + filename):
+      os.remove(path + "/mpg/" + filename)
+      return jsonify({'status': 'removed file', 'filename': filename})
     else:
       return jsonify({'status': 'not a file', 'filename': filename})
   else:

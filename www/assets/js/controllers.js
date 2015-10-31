@@ -14,7 +14,7 @@ app.controller('InternalTempController', function InternalTempController($scope,
     });
 });
 app.controller('EagleTempController', function EagleTempController($scope, $http) {
-  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5591778&units=imperial').
+  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5591778&units=imperial&APPID=dbf613b496d644bac47bd268bc609557').
     success(function(data, status, headers, config) {
       $scope.eagletemp = data.main;
     }).
@@ -23,7 +23,7 @@ app.controller('EagleTempController', function EagleTempController($scope, $http
     });
 });
 app.controller('MilwaukeeTempController', function MilwaukeeTempController($scope, $http) {
-  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5263045&units=imperial').
+  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5263045&units=imperial&APPID=dbf613b496d644bac47bd268bc609557').
     success(function(data, status, headers, config) {
       $scope.milwaukeetemp = data.main;
     }).
@@ -32,7 +32,7 @@ app.controller('MilwaukeeTempController', function MilwaukeeTempController($scop
     });
 });
 app.controller('SeattleTempController', function SeattleTempController($scope, $http) {
-  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5809844&units=imperial').
+  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5809844&units=imperial&APPID=dbf613b496d644bac47bd268bc609557').
     success(function(data, status, headers, config) {
       $scope.seattletemp = data.main;
     }).
@@ -41,7 +41,7 @@ app.controller('SeattleTempController', function SeattleTempController($scope, $
     });
 });
 app.controller('NorthBendTempController', function NorthBendTempController($scope, $http) {
-  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5804915&units=imperial').
+  $http.get('http://api.openweathermap.org/data/2.5/weather?id=5804915&units=imperial&APPID=dbf613b496d644bac47bd268bc609557').
     success(function(data, status, headers, config) {
       $scope.northbendtemp = data.main;
     }).
